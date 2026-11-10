@@ -1,0 +1,809 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		5091BC83309EAAFA00ED9CF7 /* Messages.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5091BC82309EAAFA00ED9CF7 /* Messages.framework */; };
+		5091BC8F309EAAFC00ED9CF7 /* ChatDaysMessages.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 5091BC80309EAAFA00ED9CF7 /* ChatDaysMessages.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		5091BC9D309EAF8100ED9CF7 /* CountdownCore in Frameworks */ = {isa = PBXBuildFile; productRef = 5091BC9C309EAF8100ED9CF7 /* CountdownCore */; };
+		5091BCA1309EB00100ED9CF7 /* CountdownCore in Frameworks */ = {isa = PBXBuildFile; productRef = 5091BCA2309EB00200ED9CF7 /* CountdownCore */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		5091BC60309EAA5800ED9CF7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5091BC4A309EAA5600ED9CF7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5091BC51309EAA5600ED9CF7;
+			remoteInfo = ChatDays;
+		};
+		5091BC6A309EAA5800ED9CF7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5091BC4A309EAA5600ED9CF7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5091BC51309EAA5600ED9CF7;
+			remoteInfo = ChatDays;
+		};
+		5091BC8D309EAAFC00ED9CF7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5091BC4A309EAA5600ED9CF7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5091BC7F309EAAFA00ED9CF7;
+			remoteInfo = ChatDaysMessages;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		5091BC94309EAAFC00ED9CF7 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				5091BC8F309EAAFC00ED9CF7 /* ChatDaysMessages.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		5091BC52309EAA5600ED9CF7 /* ChatDays.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChatDays.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5091BC5F309EAA5800ED9CF7 /* ChatDaysTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ChatDaysTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5091BC69309EAA5800ED9CF7 /* ChatDaysUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ChatDaysUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5091BC80309EAAFA00ED9CF7 /* ChatDaysMessages.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ChatDaysMessages.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		5091BC82309EAAFA00ED9CF7 /* Messages.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Messages.framework; path = System/Library/Frameworks/Messages.framework; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		5091BC90309EAAFC00ED9CF7 /* Exceptions for "ChatDaysMessages" folder in "ChatDaysMessages" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 5091BC7F309EAAFA00ED9CF7 /* ChatDaysMessages */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		5091BC54309EAA5600ED9CF7 /* ChatDays */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = ChatDays;
+			sourceTree = "<group>";
+		};
+		5091BC62309EAA5800ED9CF7 /* ChatDaysTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = ChatDaysTests;
+			sourceTree = "<group>";
+		};
+		5091BC6C309EAA5800ED9CF7 /* ChatDaysUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = ChatDaysUITests;
+			sourceTree = "<group>";
+		};
+		5091BC84309EAAFA00ED9CF7 /* ChatDaysMessages */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				5091BC90309EAAFC00ED9CF7 /* Exceptions for "ChatDaysMessages" folder in "ChatDaysMessages" target */,
+			);
+			path = ChatDaysMessages;
+			sourceTree = "<group>";
+		};
+		5091BCA3309EB00300ED9CF7 /* Shared */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Shared;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		5091BC4F309EAA5600ED9CF7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5091BCA1309EB00100ED9CF7 /* CountdownCore in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5091BC5C309EAA5800ED9CF7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5091BC66309EAA5800ED9CF7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5091BC7D309EAAFA00ED9CF7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5091BC83309EAAFA00ED9CF7 /* Messages.framework in Frameworks */,
+				5091BC9D309EAF8100ED9CF7 /* CountdownCore in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		5091BC49309EAA5600ED9CF7 = {
+			isa = PBXGroup;
+			children = (
+				5091BC54309EAA5600ED9CF7 /* ChatDays */,
+				5091BC62309EAA5800ED9CF7 /* ChatDaysTests */,
+				5091BC6C309EAA5800ED9CF7 /* ChatDaysUITests */,
+				5091BC84309EAAFA00ED9CF7 /* ChatDaysMessages */,
+				5091BCA3309EB00300ED9CF7 /* Shared */,
+				5091BC81309EAAFA00ED9CF7 /* Frameworks */,
+				5091BC53309EAA5600ED9CF7 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		5091BC53309EAA5600ED9CF7 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				5091BC52309EAA5600ED9CF7 /* ChatDays.app */,
+				5091BC5F309EAA5800ED9CF7 /* ChatDaysTests.xctest */,
+				5091BC69309EAA5800ED9CF7 /* ChatDaysUITests.xctest */,
+				5091BC80309EAAFA00ED9CF7 /* ChatDaysMessages.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		5091BC81309EAAFA00ED9CF7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				5091BC82309EAAFA00ED9CF7 /* Messages.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		5091BC51309EAA5600ED9CF7 /* ChatDays */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5091BC73309EAA5800ED9CF7 /* Build configuration list for PBXNativeTarget "ChatDays" */;
+			buildPhases = (
+				5091BC4E309EAA5600ED9CF7 /* Sources */,
+				5091BC4F309EAA5600ED9CF7 /* Frameworks */,
+				5091BC50309EAA5600ED9CF7 /* Resources */,
+				5091BC94309EAAFC00ED9CF7 /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5091BC8E309EAAFC00ED9CF7 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				5091BC54309EAA5600ED9CF7 /* ChatDays */,
+				5091BCA3309EB00300ED9CF7 /* Shared */,
+			);
+			name = ChatDays;
+			packageProductDependencies = (
+				5091BCA2309EB00200ED9CF7 /* CountdownCore */,
+			);
+			productName = ChatDays;
+			productReference = 5091BC52309EAA5600ED9CF7 /* ChatDays.app */;
+			productType = "com.apple.product-type.application";
+		};
+		5091BC5E309EAA5800ED9CF7 /* ChatDaysTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5091BC76309EAA5800ED9CF7 /* Build configuration list for PBXNativeTarget "ChatDaysTests" */;
+			buildPhases = (
+				5091BC5B309EAA5800ED9CF7 /* Sources */,
+				5091BC5C309EAA5800ED9CF7 /* Frameworks */,
+				5091BC5D309EAA5800ED9CF7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5091BC61309EAA5800ED9CF7 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				5091BC62309EAA5800ED9CF7 /* ChatDaysTests */,
+			);
+			name = ChatDaysTests;
+			packageProductDependencies = (
+			);
+			productName = ChatDaysTests;
+			productReference = 5091BC5F309EAA5800ED9CF7 /* ChatDaysTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		5091BC68309EAA5800ED9CF7 /* ChatDaysUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5091BC79309EAA5800ED9CF7 /* Build configuration list for PBXNativeTarget "ChatDaysUITests" */;
+			buildPhases = (
+				5091BC65309EAA5800ED9CF7 /* Sources */,
+				5091BC66309EAA5800ED9CF7 /* Frameworks */,
+				5091BC67309EAA5800ED9CF7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5091BC6B309EAA5800ED9CF7 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				5091BC6C309EAA5800ED9CF7 /* ChatDaysUITests */,
+			);
+			name = ChatDaysUITests;
+			packageProductDependencies = (
+			);
+			productName = ChatDaysUITests;
+			productReference = 5091BC69309EAA5800ED9CF7 /* ChatDaysUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		5091BC7F309EAAFA00ED9CF7 /* ChatDaysMessages */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5091BC91309EAAFC00ED9CF7 /* Build configuration list for PBXNativeTarget "ChatDaysMessages" */;
+			buildPhases = (
+				5091BC7C309EAAFA00ED9CF7 /* Sources */,
+				5091BC7D309EAAFA00ED9CF7 /* Frameworks */,
+				5091BC7E309EAAFA00ED9CF7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				5091BC84309EAAFA00ED9CF7 /* ChatDaysMessages */,
+				5091BCA3309EB00300ED9CF7 /* Shared */,
+			);
+			name = ChatDaysMessages;
+			packageProductDependencies = (
+				5091BC9C309EAF8100ED9CF7 /* CountdownCore */,
+			);
+			productName = ChatDaysMessages;
+			productReference = 5091BC80309EAAFA00ED9CF7 /* ChatDaysMessages.appex */;
+			productType = "com.apple.product-type.app-extension.messages";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		5091BC4A309EAA5600ED9CF7 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 2660;
+				LastUpgradeCheck = 2660;
+				TargetAttributes = {
+					5091BC51309EAA5600ED9CF7 = {
+						CreatedOnToolsVersion = 26.6;
+					};
+					5091BC5E309EAA5800ED9CF7 = {
+						CreatedOnToolsVersion = 26.6;
+						TestTargetID = 5091BC51309EAA5600ED9CF7;
+					};
+					5091BC68309EAA5800ED9CF7 = {
+						CreatedOnToolsVersion = 26.6;
+						TestTargetID = 5091BC51309EAA5600ED9CF7;
+					};
+					5091BC7F309EAAFA00ED9CF7 = {
+						CreatedOnToolsVersion = 26.6;
+						LastSwiftMigration = 2660;
+					};
+				};
+			};
+			buildConfigurationList = 5091BC4D309EAA5600ED9CF7 /* Build configuration list for PBXProject "ChatDays" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 5091BC49309EAA5600ED9CF7;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				5091BC9B309EAF3600ED9CF7 /* XCLocalSwiftPackageReference "CountdownCore" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 5091BC53309EAA5600ED9CF7 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				5091BC51309EAA5600ED9CF7 /* ChatDays */,
+				5091BC5E309EAA5800ED9CF7 /* ChatDaysTests */,
+				5091BC68309EAA5800ED9CF7 /* ChatDaysUITests */,
+				5091BC7F309EAAFA00ED9CF7 /* ChatDaysMessages */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		5091BC50309EAA5600ED9CF7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5091BC5D309EAA5800ED9CF7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5091BC67309EAA5800ED9CF7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5091BC7E309EAAFA00ED9CF7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		5091BC4E309EAA5600ED9CF7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5091BC5B309EAA5800ED9CF7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5091BC65309EAA5800ED9CF7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5091BC7C309EAAFA00ED9CF7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		5091BC61309EAA5800ED9CF7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5091BC51309EAA5600ED9CF7 /* ChatDays */;
+			targetProxy = 5091BC60309EAA5800ED9CF7 /* PBXContainerItemProxy */;
+		};
+		5091BC6B309EAA5800ED9CF7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5091BC51309EAA5600ED9CF7 /* ChatDays */;
+			targetProxy = 5091BC6A309EAA5800ED9CF7 /* PBXContainerItemProxy */;
+		};
+		5091BC8E309EAAFC00ED9CF7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5091BC7F309EAAFA00ED9CF7 /* ChatDaysMessages */;
+			targetProxy = 5091BC8D309EAAFC00ED9CF7 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		5091BC71309EAA5800ED9CF7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = LR553RA5Q7;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.5;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		5091BC72309EAA5800ED9CF7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = LR553RA5Q7;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.5;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		5091BC74309EAA5800ED9CF7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = LR553RA5Q7;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.paul.ChatDays;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		5091BC75309EAA5800ED9CF7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = LR553RA5Q7;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.paul.ChatDays;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		5091BC77309EAA5800ED9CF7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = LR553RA5Q7;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.paul.ChatDaysTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ChatDays.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ChatDays";
+			};
+			name = Debug;
+		};
+		5091BC78309EAA5800ED9CF7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = LR553RA5Q7;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.paul.ChatDaysTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ChatDays.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ChatDays";
+			};
+			name = Release;
+		};
+		5091BC7A309EAA5800ED9CF7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = LR553RA5Q7;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.paul.ChatDaysUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = ChatDays;
+			};
+			name = Debug;
+		};
+		5091BC7B309EAA5800ED9CF7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = LR553RA5Q7;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.paul.ChatDaysUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = ChatDays;
+			};
+			name = Release;
+		};
+		5091BC92309EAAFC00ED9CF7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "iMessage App Icon";
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = LR553RA5Q7;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ChatDaysMessages/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = ChatDays;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.paul.ChatDays.ChatDaysMessages;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		5091BC93309EAAFC00ED9CF7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "iMessage App Icon";
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = LR553RA5Q7;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ChatDaysMessages/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = ChatDays;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.paul.ChatDays.ChatDaysMessages;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		5091BC4D309EAA5600ED9CF7 /* Build configuration list for PBXProject "ChatDays" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5091BC71309EAA5800ED9CF7 /* Debug */,
+				5091BC72309EAA5800ED9CF7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5091BC73309EAA5800ED9CF7 /* Build configuration list for PBXNativeTarget "ChatDays" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5091BC74309EAA5800ED9CF7 /* Debug */,
+				5091BC75309EAA5800ED9CF7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5091BC76309EAA5800ED9CF7 /* Build configuration list for PBXNativeTarget "ChatDaysTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5091BC77309EAA5800ED9CF7 /* Debug */,
+				5091BC78309EAA5800ED9CF7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5091BC79309EAA5800ED9CF7 /* Build configuration list for PBXNativeTarget "ChatDaysUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5091BC7A309EAA5800ED9CF7 /* Debug */,
+				5091BC7B309EAA5800ED9CF7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5091BC91309EAAFC00ED9CF7 /* Build configuration list for PBXNativeTarget "ChatDaysMessages" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5091BC92309EAAFC00ED9CF7 /* Debug */,
+				5091BC93309EAAFC00ED9CF7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		5091BC9B309EAF3600ED9CF7 /* XCLocalSwiftPackageReference "CountdownCore" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = CountdownCore;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		5091BC9C309EAF8100ED9CF7 /* CountdownCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5091BC9B309EAF3600ED9CF7 /* XCLocalSwiftPackageReference "CountdownCore" */;
+			productName = CountdownCore;
+		};
+		5091BCA2309EB00200ED9CF7 /* CountdownCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5091BC9B309EAF3600ED9CF7 /* XCLocalSwiftPackageReference "CountdownCore" */;
+			productName = CountdownCore;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 5091BC4A309EAA5600ED9CF7 /* Project object */;
+}

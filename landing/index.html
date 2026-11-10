@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ChatDays: live countdowns in your group chat</title>
+<meta name="description" content="Share a countdown that stays correct in your iMessage chats.">
+<meta property="og:title" content="ChatDays: live countdowns in your group chat">
+<meta property="og:description" content="Share a countdown that stays correct in your iMessage chats.">
+<!-- After the app has an App Store record, add its ID so Safari on iPhone shows an install banner:
+<meta name="apple-itunes-app" content="app-id=YOUR_APP_ID">
+-->
+<style>
+  :root { color-scheme: light dark; --page: #f2f2f7; --ink: #1c1c1e; --muted: #6c6c70; }
+  @media (prefers-color-scheme: dark) { :root { --page: #000; --ink: #f2f2f7; --muted: #98989d; } }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; min-height: 100vh; display: flex; align-items: center; justify-content: center;
+    padding: max(20px, env(safe-area-inset-top)) 20px max(20px, env(safe-area-inset-bottom));
+    background: var(--page); color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  main { width: 100%; max-width: 420px; text-align: center; }
+  .card {
+    border-radius: 24px; padding: 40px 24px; margin-bottom: 24px;
+    background: linear-gradient(135deg, #12204a, #2e52a0); color: #fff;
+    box-shadow: 0 8px 30px rgba(0,0,0,.18);
+  }
+  .headline { font-size: clamp(40px, 14vw, 64px); font-weight: 800; line-height: 1.05; letter-spacing: -.5px; }
+  .title { font-size: 22px; font-weight: 600; margin-top: 12px; overflow-wrap: anywhere; }
+  .date { font-size: 15px; opacity: .85; margin-top: 8px; }
+  .pitch { color: var(--muted); font-size: 15px; line-height: 1.45; margin: 0 0 16px; }
+  .button {
+    display: inline-block; padding: 14px 28px; border-radius: 14px; background: #0a84ff; color: #fff;
+    font-weight: 600; font-size: 17px; text-decoration: none;
+  }
+  .fine { color: var(--muted); font-size: 12px; margin-top: 20px; }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<main>
+  <div class="card" id="card" role="img" aria-live="polite">
+    <div class="headline" id="headline">ChatDays</div>
+    <div class="title" id="title">Live countdowns for your group chat</div>
+    <div class="date" id="date"></div>
+  </div>
+  <p class="pitch" id="pitch">ChatDays is an iPhone app. Friends with the app see this countdown update by itself, right inside Messages.</p>
+  <a class="button" id="get" href="#">Get ChatDays</a>
+  <p class="fine">This page works out the countdown in your browser. The event details never leave your device.</p>
+</main>
+<script>
+(function () {
+  "use strict";
+
+  // TODO: replace with the real App Store link once the app has a listing.
+  var APP_STORE_URL = "https://www.apple.com/app-store/";
+  document.getElementById("get").href = APP_STORE_URL;
+
+  // The details arrive in the URL fragment (after #), which browsers never send to a server.
+  // '+' is escaped first because URLSearchParams would otherwise turn it into a space.
+  var params = new URLSearchParams(location.hash.slice(1).replace(/\+/g, "%2B"));
+
+  var HEX = /^[0-9a-f]{6}$/i;
+  function hexOr(value, fallback) { return value && HEX.test(value) ? value : fallback; }
+
+  function luminance(hex) {
+    var channels = [0, 2, 4].map(function (i) {
+      var c = parseInt(hex.substr(i, 2), 16) / 255;
+      return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
+    });
+    return 0.2126 * channels[0] + 0.7152 * channels[1] + 0.0722 * channels[2];
+  }
+  function contrast(a, b) {
+    var x = luminance(a), y = luminance(b);
+    return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05);
+  }
+  // Same rule as the app: keep the chosen text colour if it is readable on every
+  // background colour, otherwise use white or black, whichever reads better.
+  function effectiveText(text, backgrounds) {
+    function worst(c) { return Math.min.apply(null, backgrounds.map(function (b) { return contrast(c, b); })); }
+    if (worst(text) >= 4.5) return text;
+    return worst("FFFFFF") >= worst("000000") ? "FFFFFF" : "000000";
+  }
+
+  var match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(params.get("d") || "");
+  var event = null;
+  if (match) {
+    var y = +match[1], m = +match[2], d = +match[3];
+    var probe = new Date(Date.UTC(y, m - 1, d));
+    if (probe.getUTCFullYear() === y && probe.getUTCMonth() === m - 1 && probe.getUTCDate() === d) {
+      event = { y: y, m: m, d: d, utc: probe.getTime() };
+    }
+  }
+  if (!event) return;   // no countdown in the link: leave the plain promo page
+
+  var title = (params.get("t") || "").slice(0, 60);
+  var emoji = Array.from(params.get("e") || "").slice(0, 1).join("");
+
+  var bg = hexOr(params.get("bg"), "12204A");
+  var bg2 = hexOr(params.get("bg2"), null) || bg;
+  var fg = hexOr(params.get("fg"), "FFFFFF");
+  var card = document.getElementById("card");
+  card.style.background = "linear-gradient(135deg, #" + bg + ", #" + bg2 + ")";
+  card.style.color = "#" + effectiveText(fg, [bg, bg2]);
+
+  var dateText = new Intl.DateTimeFormat(undefined,
+    { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" }).format(new Date(event.utc));
+
+  function headline(days) {
+    if (days > 1) return days + " DAYS";
+    if (days === 1) return "TOMORROW";
+    if (days === 0) return "TODAY!";
+    return "EVENT PASSED";
+  }
+
+  function render() {
+    var now = new Date();
+    var today = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate());   // the viewer's local calendar day
+    var days = Math.round((event.utc - today) / 86400000);
+    document.getElementById("headline").textContent = headline(days);
+    document.getElementById("title").textContent = (emoji ? emoji + " " : "") + (title || "Countdown");
+    document.getElementById("date").textContent = dateText;
+    card.setAttribute("aria-label", headline(days) + ", " + (title || "countdown") + ", " + dateText);
+    document.getElementById("pitch").textContent =
+      "This countdown is live. Get ChatDays to send your own, and to see countdowns update by themselves inside Messages.";
+    document.title = headline(days) + " \u00B7 " + (title || "ChatDays");
+  }
+
+  function scheduleNextMidnight() {
+    var now = new Date();
+    var next = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 1);
+    setTimeout(function () { render(); scheduleNextMidnight(); }, next - now);
+  }
+
+  render();
+  scheduleNextMidnight();
+  document.addEventListener("visibilitychange", function () { if (!document.hidden) render(); });
+})();
+</script>
+</body>
+</html>

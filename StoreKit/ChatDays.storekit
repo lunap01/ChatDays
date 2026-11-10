@@ -1,0 +1,33 @@
+{
+  "identifier" : "3A7C1E52",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+    {
+      "displayPrice" : "1.99",
+      "familyShareable" : false,
+      "internalID" : "6743100001",
+      "localizations" : [
+        {
+          "description" : "Send unlimited countdowns",
+          "displayName" : "ChatDays Unlock",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "com.paul.ChatDays.unlock",
+      "referenceName" : "ChatDays Unlock",
+      "type" : "NonConsumable"
+    }
+  ],
+  "settings" : {
+
+  },
+  "subscriptionGroups" : [
+
+  ],
+  "version" : {
+    "major" : 3,
+    "minor" : 0
+  }
+}
