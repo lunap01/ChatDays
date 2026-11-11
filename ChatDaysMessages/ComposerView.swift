@@ -14,12 +14,10 @@ struct ComposerView: View {
 
     var body: some View {
         ScrollView {
-            VStack(spacing: 14) {
+            VStack(alignment: .leading, spacing: 22) {
                 if !library.items.isEmpty {
-                    VStack(alignment: .leading, spacing: 6) {
-                        Text("Send again")
-                            .font(.footnote.weight(.semibold))
-                            .foregroundStyle(.secondary)
+                    VStack(alignment: .leading, spacing: 8) {
+                        SectionCaption("Send again")
                         ScrollView(.horizontal, showsIndicators: false) {
                             HStack(spacing: 8) {
                                 ForEach(library.items) { item in
@@ -33,15 +31,15 @@ struct ComposerView: View {
 
                 CountdownFormView(draft: $draft)
 
-                Toggle("Save to My countdowns", isOn: $saveToLibrary)
-                    .font(.footnote)
-
-                Text(access.isUnlocked
-                     ? "ChatDays unlocked"
-                     : "\(access.remainingFree) of \(UsageLedger.freeLimit) free countdowns left")
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                VStack(alignment: .leading, spacing: 10) {
+                    Toggle("Save to My countdowns", isOn: $saveToLibrary)
+                        .font(.subheadline)
+                    Text(access.isUnlocked
+                         ? "ChatDays unlocked"
+                         : "\(access.remainingFree) of \(UsageLedger.freeLimit) free countdowns left")
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+                }
 
                 Button {
                     if access.canSend {
@@ -52,9 +50,8 @@ struct ComposerView: View {
                     }
                 } label: {
                     Text(access.canSend ? "Insert into message" : "Unlock to send more")
-                        .frame(maxWidth: .infinity)
                 }
-                .buttonStyle(.borderedProminent)
+                .buttonStyle(AccentPillButtonStyle())
                 .disabled(access.canSend && draft.cleanTitle.isEmpty)
             }
             .padding()
@@ -69,3 +66,4 @@ struct ComposerView: View {
         }
     }
 }
+

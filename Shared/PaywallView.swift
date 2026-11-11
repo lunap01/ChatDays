@@ -22,8 +22,7 @@ struct PaywallView: View {
                 Text(access.priceText.map { "Unlock for \($0)" } ?? "Price unavailable")
                     .frame(maxWidth: .infinity)
             }
-            .buttonStyle(.borderedProminent)
-            .controlSize(.large)
+            .buttonStyle(AccentPillButtonStyle())
             .disabled(access.priceText == nil || access.isWorking)
 
             Button("Restore Purchases") {
@@ -48,3 +47,4 @@ struct PaywallView: View {
         }
     }
 }
+

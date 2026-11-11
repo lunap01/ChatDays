@@ -1,5 +1,6 @@
 import Foundation
 import SwiftUI
+import UIKit
 import MessageUI
 import CountdownCore
 
@@ -13,6 +14,13 @@ struct ContentView: View {
     @State private var showWelcome = false
     @State private var sheet: ActiveSheet?
     @State private var notice: String?
+    @State private var tab: Tab = .upcoming
+
+    enum Tab: String, CaseIterable, Identifiable {
+        case upcoming = "Upcoming"
+        case past = "Past"
+        var id: String { rawValue }
+    }
 
     enum ActiveSheet: Identifiable {
         case editor(SavedCountdown?)
@@ -28,46 +36,45 @@ struct ContentView: View {
         }
     }
 
+    private var today: EventDate { EventDate(date: Date(), timeZone: .current) }
+    private var upcoming: [SavedCountdown] { library.items.filter { $0.eventDate >= today } }
+    private var past: [SavedCountdown] { library.items.filter { $0.eventDate < today } }
+
     var body: some View {
         NavigationStack {
-            List {
-                Section {
-                    allowanceRows
-                }
-
-                Section("My countdowns") {
-                    if library.items.isEmpty {
-                        Text("No countdowns yet. Tap + to create one.")
-                            .foregroundStyle(.secondary)
+            ScrollView {
+                LazyVStack(spacing: 16) {
+                    header
+                    Picker("Show", selection: $tab) {
+                        ForEach(Tab.allCases) { Text($0.rawValue).tag($0) }
                     }
-                    ForEach(library.items) { item in
-                        Button { sheet = .editor(item) } label: { CountdownRow(item: item) }
-                            .buttonStyle(.plain)
-                            .swipeActions(edge: .trailing) {
-                                Button(role: .destructive) { library.delete(item.id) } label: {
-                                    Label("Delete", systemImage: "trash")
-                                }
-                            }
-                            .swipeActions(edge: .leading) {
-                                Button { send(item) } label: { Label("Send", systemImage: "paperplane") }
-                                    .tint(.blue)
-                            }
-                    }
-                }
+                    .pickerStyle(.segmented)
+                    .labelsHidden()
 
-                Section {
-                    Button("How ChatDays works") { showWelcome = true }
-                }
+                    content
+                    allowanceCard
+                    footerLinks
 
-                #if DEBUG
-                Section("Developer (debug builds only)") {
-                    Toggle("Pretend unlocked", isOn: Binding(
-                        get: { access.isDeveloperUnlocked },
-                        set: { access.setDeveloperUnlocked($0) }
-                    ))
-                    Button("Reset free count") { access.resetUsage() }
+                    #if DEBUG
+                    developerCard
+                    #endif
                 }
-                #endif
+                .padding(.horizontal, 20)
+                .padding(.top, 8)
+                .padding(.bottom, 24)
+            }
+            .background(Color(.systemGroupedBackground))
+            .toolbar(.hidden, for: .navigationBar)
+            .safeAreaInset(edge: .bottom) {
+                Button {
+                    sheet = .editor(nil)
+                } label: {
+                    Label("New countdown", systemImage: "plus")
+                }
+                .buttonStyle(AccentPillButtonStyle())
+                .padding(.horizontal, 20)
+                .padding(.vertical, 10)
+                .background(.bar)
             }
             .fullScreenCover(isPresented: $showWelcome) {
                 WelcomeView(
@@ -81,13 +88,6 @@ struct ContentView: View {
                         showWelcome = false
                     }
                 )
-            }
-            .navigationTitle("ChatDays")
-            .toolbar {
-                ToolbarItem(placement: .primaryAction) {
-                    Button { sheet = .editor(nil) } label: { Image(systemName: "plus") }
-                        .accessibilityLabel("New countdown")
-                }
             }
         }
         .task { await access.refresh() }
@@ -135,20 +135,147 @@ struct ContentView: View {
         }
     }
 
-    @ViewBuilder
-    private var allowanceRows: some View {
-        if access.isUnlocked {
-            Label("ChatDays unlocked. Send as many countdowns as you like.", systemImage: "checkmark.seal")
-        } else {
-            Text("\(access.remainingFree) of \(UsageLedger.freeLimit) free countdowns left")
-            Button("Unlock ChatDays") { sheet = .paywall }
+    // MARK: Sections
+
+    private var header: some View {
+        HStack(alignment: .center) {
+            Text("ChatDays")
+                .font(.system(size: 34, weight: .bold))
+                .accessibilityAddTraits(.isHeader)
+            Spacer()
+            if !access.isUnlocked {
+                Button {
+                    sheet = .paywall
+                } label: {
+                    Text("\(access.remainingFree) of \(UsageLedger.freeLimit) free left")
+                        .font(.footnote.weight(.semibold))
+                        .foregroundStyle(Color.accentColor)
+                        .padding(.horizontal, 12)
+                        .padding(.vertical, 8)
+                        .background(Color.accentColor.opacity(0.15), in: Capsule())
+                }
+                .buttonStyle(.plain)
+            }
         }
-        Button("Restore Purchases") { Task { await access.restore() } }
-            .disabled(access.isWorking)
-        if let message = access.message {
-            Text(message).font(.footnote).foregroundStyle(.orange)
+        .padding(.top, 8)
+    }
+
+    @ViewBuilder
+    private var content: some View {
+        if library.items.isEmpty {
+            emptyState
+        } else if tab == .upcoming {
+            if let first = upcoming.first {
+                HeroCountdownCard(
+                    item: first,
+                    onSend: { send(first) },
+                    onEdit: { sheet = .editor(first) },
+                    onDelete: { library.delete(first.id) }
+                )
+                ForEach(Array(upcoming.dropFirst())) { item in
+                    CompactCountdownCard(
+                        item: item,
+                        onSend: { send(item) },
+                        onEdit: { sheet = .editor(item) },
+                        onDelete: { library.delete(item.id) }
+                    )
+                }
+            } else {
+                note("Nothing coming up. Create a new countdown, or look in Past.")
+            }
+        } else {
+            if past.isEmpty {
+                note("No past countdowns yet.")
+            } else {
+                ForEach(past) { item in
+                    PastCountdownRow(
+                        item: item,
+                        onEdit: { sheet = .editor(item) },
+                        onDelete: { library.delete(item.id) }
+                    )
+                }
+            }
         }
     }
+
+    private var emptyState: some View {
+        VStack(spacing: 12) {
+            Text("Make your first countdown")
+                .font(.title3.bold())
+            Text("Pick a template, choose a date, and send it to a chat.")
+                .font(.subheadline)
+                .foregroundStyle(.secondary)
+                .multilineTextAlignment(.center)
+            Button("Create a countdown") { sheet = .editor(nil) }
+                .buttonStyle(AccentPillButtonStyle())
+                .padding(.top, 4)
+        }
+        .padding(24)
+        .frame(maxWidth: .infinity)
+        .background(ChatDaysTheme.panel, in: RoundedRectangle(cornerRadius: 24, style: .continuous))
+    }
+
+    private func note(_ text: String) -> some View {
+        Text(text)
+            .font(.subheadline)
+            .foregroundStyle(.secondary)
+            .multilineTextAlignment(.center)
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 24)
+    }
+
+    @ViewBuilder
+    private var allowanceCard: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            if access.isUnlocked {
+                Label("ChatDays unlocked", systemImage: "checkmark.seal.fill")
+                    .font(.subheadline.weight(.semibold))
+            } else {
+                Text("\(access.remainingFree) of \(UsageLedger.freeLimit) free countdowns left")
+                    .font(.subheadline.weight(.semibold))
+                Text("Unlock once to send as many as you like. No subscription.")
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+                Button("Unlock ChatDays") { sheet = .paywall }
+                    .buttonStyle(.borderedProminent)
+            }
+            if let message = access.message {
+                Text(message).font(.footnote).foregroundStyle(.orange)
+            }
+        }
+        .padding(16)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(ChatDaysTheme.panel, in: RoundedRectangle(cornerRadius: 20, style: .continuous))
+    }
+
+    private var footerLinks: some View {
+        HStack(spacing: 20) {
+            Button("Restore Purchases") { Task { await access.restore() } }
+                .disabled(access.isWorking)
+            Button("How ChatDays works") { showWelcome = true }
+        }
+        .font(.footnote)
+        .padding(.top, 4)
+    }
+
+    #if DEBUG
+    private var developerCard: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            SectionCaption("Developer (debug builds only)")
+            Toggle("Pretend unlocked", isOn: Binding(
+                get: { access.isDeveloperUnlocked },
+                set: { access.setDeveloperUnlocked($0) }
+            ))
+            Button("Reset free count") { access.resetUsage() }
+        }
+        .font(.footnote)
+        .padding(16)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(ChatDaysTheme.panel, in: RoundedRectangle(cornerRadius: 20, style: .continuous))
+    }
+    #endif
+
+    // MARK: Actions
 
     private func send(_ item: SavedCountdown) {
         guard MFMessageComposeViewController.canSendText() else {
@@ -186,19 +313,19 @@ struct EditorSheet: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                VStack(spacing: 16) {
+                VStack(spacing: 20) {
                     CountdownFormView(draft: $draft)
                     Button {
                         onSaveAndSend(draft)
                     } label: {
-                        Label("Save and send in Messages", systemImage: "paperplane")
-                            .frame(maxWidth: .infinity)
+                        Label("Save and send in Messages", systemImage: "paperplane.fill")
                     }
-                    .buttonStyle(.borderedProminent)
+                    .buttonStyle(AccentPillButtonStyle())
                     .disabled(draft.cleanTitle.isEmpty)
                 }
-                .padding()
+                .padding(20)
             }
+            .background(Color(.systemGroupedBackground))
             .navigationTitle(isNew ? "New countdown" : "Edit countdown")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {

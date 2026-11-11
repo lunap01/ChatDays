@@ -3,7 +3,7 @@ import SwiftUI
 import CountdownCore
 
 /// Preview and fields for creating or editing a countdown. Used by the Messages
-/// extension's composer and the main app's editor.
+/// extension's composer and the main app's editor, so both look the same.
 struct CountdownFormView: View {
     @Binding var draft: CountdownDraft
 
@@ -27,83 +27,144 @@ struct CountdownFormView: View {
     }
 
     var body: some View {
-        VStack(spacing: 14) {
-            CountdownCardView(
-                content: .countdown(CountdownCalculator.state(for: draft.eventDate)),
-                title: draft.cleanTitle.isEmpty ? "Event name" : draft.cleanTitle,
-                emoji: draft.emoji.isEmpty ? nil : String(draft.emoji.prefix(1)),
-                eventDate: draft.eventDate,
-                style: draft.style
-            )
-            .frame(height: 180)
-            .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
+        VStack(alignment: .leading, spacing: 22) {
+            preview
+            templates
+            details
+            look
+            typeChoice
+        }
+    }
 
-            VStack(alignment: .leading, spacing: 6) {
-                Text("Templates")
-                    .font(.footnote.weight(.semibold))
-                    .foregroundStyle(.secondary)
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: 8) {
-                        ForEach(CountdownTemplate.allCases) { template in
-                            Button {
-                                draft.apply(template)
-                            } label: {
-                                Text("\(template.emoji) \(template.name)")
-                                    .font(.subheadline)
-                                    .padding(.horizontal, 12)
-                                    .padding(.vertical, 8)
-                                    .background(Color.secondary.opacity(0.15), in: Capsule())
-                            }
-                            .buttonStyle(.plain)
+    // MARK: Sections
+
+    /// Exactly the card that will be sent.
+    private var preview: some View {
+        CountdownCardView(
+            content: .countdown(CountdownCalculator.state(for: draft.eventDate)),
+            title: draft.cleanTitle.isEmpty ? "Event name" : draft.cleanTitle,
+            emoji: draft.emoji.isEmpty ? nil : String(draft.emoji.prefix(1)),
+            eventDate: draft.eventDate,
+            style: draft.style
+        )
+        .frame(height: 190)
+        .clipShape(RoundedRectangle(cornerRadius: 28, style: .continuous))
+        .shadow(color: .black.opacity(0.12), radius: 12, y: 6)
+    }
+
+    private var templates: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            SectionCaption("Start from a template")
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 8) {
+                    ForEach(CountdownTemplate.allCases) { template in
+                        Button {
+                            draft.apply(template)
+                        } label: {
+                            Text("\(template.emoji) \(template.name)")
+                                .font(.subheadline)
+                                .padding(.horizontal, 14)
+                                .padding(.vertical, 9)
+                                .background(ChatDaysTheme.panel, in: Capsule())
                         }
+                        .buttonStyle(.plain)
                     }
                 }
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
+        }
+    }
 
-            TextField("Event name", text: $draft.title)
-                .textFieldStyle(.roundedBorder)
-            TextField("Emoji (optional)", text: $draft.emoji)
-                .textFieldStyle(.roundedBorder)
-            DatePicker("Date", selection: $draft.date, in: earliestDate..., displayedComponents: .date)
+    private var details: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            SectionCaption("Details")
+            VStack(spacing: 0) {
+                TextField("Event name", text: $draft.title)
+                    .padding(14)
+                Divider()
+                TextField("Emoji (optional)", text: $draft.emoji)
+                    .padding(14)
+                Divider()
+                DatePicker("Date", selection: $draft.date, in: earliestDate..., displayedComponents: .date)
+                    .padding(.horizontal, 14)
+                    .padding(.vertical, 8)
+            }
+            .background(ChatDaysTheme.panel, in: RoundedRectangle(cornerRadius: 18, style: .continuous))
+        }
+    }
 
-            HStack(spacing: 8) {
+    private var look: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            SectionCaption("Look")
+            HStack(spacing: 14) {
                 ForEach(CountdownStyle.Preset.allCases) { preset in
+                    let selected = draft.style == preset.style
                     Button {
                         draft.style = preset.style
                     } label: {
-                        RoundedRectangle(cornerRadius: 10, style: .continuous)
+                        Circle()
                             .fill(LinearGradient(
                                 colors: [Color(preset.style.background),
                                          Color(preset.style.background2 ?? preset.style.background)],
                                 startPoint: .topLeading, endPoint: .bottomTrailing))
-                            .frame(height: 36)
-                            .overlay(RoundedRectangle(cornerRadius: 10, style: .continuous)
-                                .stroke(Color.secondary.opacity(0.4)))
+                            .overlay(Circle().stroke(Color.primary.opacity(0.15)))
+                            .frame(width: 40, height: 40)
+                            .padding(4)
+                            .overlay(Circle().stroke(Color.primary, lineWidth: selected ? 2.5 : 0))
                     }
+                    .buttonStyle(.plain)
                     .accessibilityLabel(preset.title)
+                    .accessibilityAddTraits(selected ? .isSelected : [])
                 }
             }
-            ColorPicker("Background", selection: backgroundBinding, supportsOpacity: false)
-            ColorPicker("Text", selection: textBinding, supportsOpacity: false)
+            VStack(spacing: 0) {
+                ColorPicker("Background", selection: backgroundBinding, supportsOpacity: false)
+                    .padding(.horizontal, 14)
+                    .padding(.vertical, 8)
+                Divider()
+                ColorPicker("Text", selection: textBinding, supportsOpacity: false)
+                    .padding(.horizontal, 14)
+                    .padding(.vertical, 8)
+            }
+            .background(ChatDaysTheme.panel, in: RoundedRectangle(cornerRadius: 18, style: .continuous))
             if !draft.style.isReadable {
                 Text("Those colours are hard to read together, so the text colour will be adjusted automatically.")
                     .font(.footnote)
                     .foregroundStyle(.orange)
-                    .frame(maxWidth: .infinity, alignment: .leading)
             }
-
-            Picker("Type", selection: $draft.mode) {
-                Text("Live").tag(CountdownMode.live)
-                Text("Static").tag(CountdownMode.fixed)
-            }
-            .pickerStyle(.segmented)
-            Text(draft.mode == .live
-                 ? "Updates every day. Friends without ChatDays see the event and date, with a prompt to get the app."
-                 : "A fixed picture of the countdown as it is today. Works for everyone.")
-                .font(.footnote)
-                .foregroundStyle(.secondary)
-                .frame(maxWidth: .infinity, alignment: .leading)
         }
     }
+
+    private var typeChoice: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            SectionCaption("Type")
+            HStack(spacing: 10) {
+                typeOption(.live, title: "Live", detail: "Updates every day for friends with ChatDays.")
+                typeOption(.fixed, title: "Static", detail: "A fixed picture of today. Works for everyone.")
+            }
+        }
+    }
+
+    private func typeOption(_ mode: CountdownMode, title: String, detail: String) -> some View {
+        let selected = draft.mode == mode
+        return Button {
+            draft.mode = mode
+        } label: {
+            VStack(alignment: .leading, spacing: 4) {
+                Text(title).font(.subheadline.weight(.semibold))
+                Text(detail)
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .multilineTextAlignment(.leading)
+            }
+            .padding(12)
+            .frame(maxWidth: .infinity, minHeight: 78, alignment: .topLeading)
+            .background(selected ? Color.primary.opacity(0.12) : ChatDaysTheme.panel,
+                        in: RoundedRectangle(cornerRadius: 16, style: .continuous))
+            .overlay(RoundedRectangle(cornerRadius: 16, style: .continuous)
+                .stroke(selected ? Color.accentColor : Color.clear, lineWidth: 2))
+        }
+        .buttonStyle(.plain)
+        .accessibilityAddTraits(selected ? .isSelected : [])
+    }
 }
+
