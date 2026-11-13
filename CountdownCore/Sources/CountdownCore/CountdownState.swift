@@ -1,5 +1,5 @@
 import Foundation
- 
+
 public enum CountdownState: Equatable, Sendable {
     /// Two or more days to go.
     case daysRemaining(Int)
@@ -9,7 +9,7 @@ public enum CountdownState: Equatable, Sendable {
     /// A countdown that keeps counting after its date (anniversaries): time since.
     /// `years` and `months` are whole calendar years and the whole months beyond them.
     case elapsed(days: Int, years: Int, months: Int)
- 
+
     /// Big-number text, matching the spec's wording table.
     public var headline: String {
         switch self {
@@ -21,7 +21,7 @@ public enum CountdownState: Equatable, Sendable {
             return CountdownState.elapsedText(days: days, years: years, months: months).uppercased()
         }
     }
- 
+
     /// "1,250 days", shown beside a years-and-months headline. Nil under a year,
     /// where the headline is already the number of days.
     public func elapsedDaysText(locale: Locale = .current) -> String? {
@@ -31,7 +31,7 @@ public enum CountdownState: Equatable, Sendable {
         formatter.locale = locale
         return "\(formatter.string(from: NSNumber(value: days)) ?? String(days)) days"
     }
- 
+
     /// "1 year, 1 month", "3 years", or "212 days" under a year.
     private static func elapsedText(days: Int, years: Int, months: Int) -> String {
         if years >= 1 {
@@ -41,7 +41,7 @@ public enum CountdownState: Equatable, Sendable {
         }
         return days == 1 ? "1 day" : "\(days) days"
     }
- 
+
     /// A plain sentence for sharing, such as "42 days until Family Holiday".
     public func sentence(about name: String) -> String {
         switch self {
@@ -53,7 +53,7 @@ public enum CountdownState: Equatable, Sendable {
             return "\(CountdownState.elapsedText(days: days, years: years, months: months)) since \(name)"
         }
     }
- 
+
     /// Whole days until the event; negative once it has passed.
     public var signedDays: Int {
         switch self {
@@ -65,7 +65,7 @@ public enum CountdownState: Equatable, Sendable {
         }
     }
 }
- 
+
 public enum CountdownCalculator {
     /// Calendar-day countdown as seen by someone in `timeZone` at instant `now`.
     ///
@@ -80,7 +80,7 @@ public enum CountdownCalculator {
         let today = EventDate(date: now, timeZone: timeZone)
         return state(for: event, today: today, countsUp: countsUp)
     }
- 
+
     public static func state(for event: EventDate, today: EventDate, countsUp: Bool = false) -> CountdownState {
         let seconds = event.utcMidnight.timeIntervalSince(today.utcMidnight)
         let days = Int((seconds / 86_400).rounded())
@@ -95,7 +95,7 @@ public enum CountdownCalculator {
         default: return .daysRemaining(days)
         }
     }
- 
+
     /// The start of the next local day after `now`. Live bubbles refresh here
     /// (once a day) instead of ticking every second.
     public static func nextMidnight(after now: Date, timeZone: TimeZone = .current) -> Date {
