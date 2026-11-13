@@ -26,12 +26,14 @@ struct ContentView: View {
         case editor(SavedCountdown?)
         case send(CountdownPayload)
         case paywall
+        case share(ShareRequest)
 
         var id: String {
             switch self {
             case .editor(let item): return "editor-\(item?.id.uuidString ?? "new")"
             case .send(let payload): return "send-\(payload.id.uuidString)"
             case .paywall: return "paywall"
+            case .share(let request): return "share-\(request.id.uuidString)"
             }
         }
     }
@@ -126,6 +128,9 @@ struct ContentView: View {
                 .ignoresSafeArea()
             case .paywall:
                 PaywallView(access: access) { self.sheet = nil }
+            case .share(let request):
+                ActivityView(items: request.items)
+                    .ignoresSafeArea()
             }
         }
         .alert("ChatDays", isPresented: Binding(get: { notice != nil }, set: { if !$0 { notice = nil } })) {
@@ -170,14 +175,18 @@ struct ContentView: View {
                     item: first,
                     onSend: { send(first) },
                     onEdit: { sheet = .editor(first) },
-                    onDelete: { library.delete(first.id) }
+                    onDelete: { library.delete(first.id) },
+                    onShareImage: { shareImage(first) },
+                    onShareLink: shareLinkAction(for: first)
                 )
                 ForEach(Array(upcoming.dropFirst())) { item in
                     CompactCountdownCard(
                         item: item,
                         onSend: { send(item) },
                         onEdit: { sheet = .editor(item) },
-                        onDelete: { library.delete(item.id) }
+                        onDelete: { library.delete(item.id) },
+                        onShareImage: { shareImage(item) },
+                        onShareLink: shareLinkAction(for: item)
                     )
                 }
             } else {
@@ -277,6 +286,27 @@ struct ContentView: View {
 
     // MARK: Actions
 
+    private func shareImage(_ item: SavedCountdown) {
+        if let request = ShareSupport.imageRequest(for: item) {
+            sheet = .share(request)
+        } else {
+            notice = "Couldn't create the image."
+        }
+    }
+
+    private func shareLink(_ item: SavedCountdown) {
+        if let request = ShareSupport.linkRequest(for: item) {
+            sheet = .share(request)
+        } else {
+            notice = "Link sharing isn't set up yet."
+        }
+    }
+
+    /// Nil hides "Share link" until `CountdownLink.shareBase` is set.
+    private func shareLinkAction(for item: SavedCountdown) -> (() -> Void)? {
+        ShareSupport.canShareLink ? { shareLink(item) } : nil
+    }
+
     private func send(_ item: SavedCountdown) {
         guard MFMessageComposeViewController.canSendText() else {
             notice = "This device can't send messages."
@@ -344,3 +374,4 @@ struct EditorSheet: View {
 #Preview {
     ContentView()
 }
+

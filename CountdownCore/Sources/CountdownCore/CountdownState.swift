@@ -1,12 +1,12 @@
 import Foundation
-
+ 
 public enum CountdownState: Equatable, Sendable {
     /// Two or more days to go.
     case daysRemaining(Int)
     case tomorrow
     case today
     case passed(daysAgo: Int)
-
+ 
     /// Big-number text, matching the spec's wording table.
     public var headline: String {
         switch self {
@@ -16,7 +16,17 @@ public enum CountdownState: Equatable, Sendable {
         case .passed: return "EVENT PASSED"
         }
     }
-
+ 
+    /// A plain sentence for sharing, such as "42 days until Family Holiday".
+    public func sentence(about name: String) -> String {
+        switch self {
+        case .daysRemaining(let n): return "\(n) days until \(name)"
+        case .tomorrow: return "\(name) is tomorrow"
+        case .today: return "\(name) is today!"
+        case .passed(let n): return n == 1 ? "\(name) was yesterday" : "\(name) was \(n) days ago"
+        }
+    }
+ 
     /// Whole days until the event; negative once it has passed.
     public var signedDays: Int {
         switch self {
@@ -27,7 +37,7 @@ public enum CountdownState: Equatable, Sendable {
         }
     }
 }
-
+ 
 public enum CountdownCalculator {
     /// Calendar-day countdown as seen by someone in `timeZone` at instant `now`.
     ///
@@ -40,7 +50,7 @@ public enum CountdownCalculator {
         let today = EventDate(date: now, timeZone: timeZone)
         return state(for: event, today: today)
     }
-
+ 
     public static func state(for event: EventDate, today: EventDate) -> CountdownState {
         let seconds = event.utcMidnight.timeIntervalSince(today.utcMidnight)
         let days = Int((seconds / 86_400).rounded())
@@ -51,7 +61,7 @@ public enum CountdownCalculator {
         default: return .daysRemaining(days)
         }
     }
-
+ 
     /// The start of the next local day after `now`. Live bubbles refresh here
     /// (once a day) instead of ticking every second.
     public static func nextMidnight(after now: Date, timeZone: TimeZone = .current) -> Date {

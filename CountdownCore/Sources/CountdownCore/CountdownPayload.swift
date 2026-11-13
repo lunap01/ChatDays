@@ -34,6 +34,12 @@ public enum CountdownLink {
     }
 
     public static let base: URL? = nil
+
+    /// Address of your landing page, for example
+    /// `https://<you>.github.io/chatdays-support/`. Used only by "Share link":
+    /// the details ride in the fragment, so the page's server never sees them.
+    /// While this is nil the app doesn't offer link sharing.
+    public static let shareBase: URL? = URL(string: "https://lunap01.github.io/chatdays-support/")
     public static let style: Style = .fragment
 }
 
@@ -85,6 +91,29 @@ public struct CountdownPayload: Equatable, Sendable {
 
     public func accessibilityDescription(locale: Locale = .current) -> String {
         "Countdown to \(title) on \(eventDate.displayString(locale: locale))"
+    }
+
+    // MARK: - Sharing outside iMessage
+
+    /// A web link that shows this countdown live in any browser, or nil when
+    /// no site address is configured. Leaves out internal details such as the ID.
+    public func shareURL(base: URL? = CountdownLink.shareBase) -> URL? {
+        guard let base, var comps = URLComponents(url: base, resolvingAgainstBaseURL: false) else { return nil }
+        var items: [URLQueryItem] = [
+            .init(name: "v", value: String(CountdownPayload.currentVersion)),
+            .init(name: "t", value: title),
+            .init(name: "d", value: eventDate.isoString),
+            .init(name: "bg", value: style.background.hex),
+            .init(name: "fg", value: style.text.hex)
+        ]
+        if let bg2 = style.background2 { items.append(.init(name: "bg2", value: bg2.hex)) }
+        if let emoji { items.append(.init(name: "e", value: emoji)) }
+
+        var details = URLComponents()
+        details.queryItems = items
+        comps.query = nil
+        comps.percentEncodedFragment = details.percentEncodedQuery
+        return comps.url
     }
 
     // MARK: - URL encoding
@@ -175,3 +204,4 @@ public struct CountdownPayload: Equatable, Sendable {
                   mode: mode, style: style, sentOn: sentOn)
     }
 }
+

@@ -40,16 +40,24 @@ struct CountdownChip: View {
     }
 }
 
-/// Send, edit and delete, behind a "more" button.
+/// Send, share, edit and delete, behind a "more" button.
 struct CountdownActionsMenu: View {
     var onSend: (() -> Void)? = nil
     let onEdit: () -> Void
     let onDelete: () -> Void
+    var onShareImage: (() -> Void)? = nil
+    var onShareLink: (() -> Void)? = nil
 
     var body: some View {
         Menu {
             if let onSend {
-                Button { onSend() } label: { Label("Send", systemImage: "paperplane") }
+                Button { onSend() } label: { Label("Send in Messages", systemImage: "paperplane") }
+            }
+            if let onShareImage {
+                Button { onShareImage() } label: { Label("Share as image", systemImage: "photo") }
+            }
+            if let onShareLink {
+                Button { onShareLink() } label: { Label("Share link", systemImage: "link") }
             }
             Button(action: onEdit) { Label("Edit", systemImage: "pencil") }
             Button(role: .destructive, action: onDelete) { Label("Delete", systemImage: "trash") }
@@ -63,22 +71,35 @@ struct CountdownActionsMenu: View {
     }
 }
 
+/// A translucent pill used for the actions on a card.
+private func pillLabel(_ title: String, systemImage: String, tint: Color) -> some View {
+    Label(title, systemImage: systemImage)
+        .font(.subheadline.weight(.semibold))
+        .padding(.horizontal, 16)
+        .padding(.vertical, 10)
+        .background(tint.opacity(0.18), in: Capsule())
+}
+
 /// The next upcoming countdown, big.
 struct HeroCountdownCard: View {
     let item: SavedCountdown
     let onSend: () -> Void
     let onEdit: () -> Void
     let onDelete: () -> Void
+    var onShareImage: (() -> Void)? = nil
+    var onShareLink: (() -> Void)? = nil
 
     var body: some View {
         let style = item.style
+        let tint = Color(style.effectiveText)
         VStack(alignment: .leading, spacing: 0) {
             HStack {
                 Text("NEXT UP")
                     .font(.caption.weight(.bold))
                     .tracking(1.5)
                 Spacer()
-                CountdownActionsMenu(onSend: onSend, onEdit: onEdit, onDelete: onDelete)
+                CountdownActionsMenu(onSend: onSend, onEdit: onEdit, onDelete: onDelete,
+                                     onShareImage: onShareImage, onShareLink: onShareLink)
                     .padding(.trailing, -10)
             }
             Spacer(minLength: 12)
@@ -92,17 +113,28 @@ struct HeroCountdownCard: View {
                 .padding(.top, 4)
             Text(item.eventDate.displayString())
                 .font(.subheadline)
-            Button(action: onSend) {
-                Label("Send", systemImage: "paperplane.fill")
-                    .font(.subheadline.weight(.semibold))
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 10)
-                    .background(Color(style.effectiveText).opacity(0.18), in: Capsule())
+            HStack(spacing: 10) {
+                Button(action: onSend) {
+                    pillLabel("Send", systemImage: "paperplane.fill", tint: tint)
+                }
+                .buttonStyle(.plain)
+
+                if onShareImage != nil || onShareLink != nil {
+                    Menu {
+                        if let onShareImage {
+                            Button { onShareImage() } label: { Label("Share as image", systemImage: "photo") }
+                        }
+                        if let onShareLink {
+                            Button { onShareLink() } label: { Label("Share link", systemImage: "link") }
+                        }
+                    } label: {
+                        pillLabel("Share", systemImage: "square.and.arrow.up", tint: tint)
+                    }
+                }
             }
-            .buttonStyle(.plain)
             .padding(.top, 14)
         }
-        .foregroundStyle(Color(style.effectiveText))
+        .foregroundStyle(tint)
         .padding(20)
         .frame(maxWidth: .infinity, minHeight: 230, alignment: .leading)
         .background(cardGradient(style), in: RoundedRectangle(cornerRadius: 28, style: .continuous))
@@ -117,6 +149,8 @@ struct CompactCountdownCard: View {
     let onSend: () -> Void
     let onEdit: () -> Void
     let onDelete: () -> Void
+    var onShareImage: (() -> Void)? = nil
+    var onShareLink: (() -> Void)? = nil
 
     var body: some View {
         let style = item.style
@@ -133,7 +167,8 @@ struct CompactCountdownCard: View {
                 .font(.system(size: 20, weight: .heavy, design: .rounded))
                 .lineLimit(1)
                 .minimumScaleFactor(0.6)
-            CountdownActionsMenu(onSend: onSend, onEdit: onEdit, onDelete: onDelete)
+            CountdownActionsMenu(onSend: onSend, onEdit: onEdit, onDelete: onDelete,
+                                 onShareImage: onShareImage, onShareLink: onShareLink)
                 .padding(.trailing, -8)
         }
         .foregroundStyle(Color(style.effectiveText))
