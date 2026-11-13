@@ -15,7 +15,8 @@ enum MessageFactory {
         var outgoing = payload
         let today = EventDate(date: now, timeZone: timeZone)
         outgoing.sentOn = today
-        let state = CountdownCalculator.state(for: outgoing.eventDate, now: now, timeZone: timeZone)
+        let state = CountdownCalculator.state(for: outgoing.eventDate, now: now, timeZone: timeZone,
+                                              countsUp: outgoing.countsUp)
 
         let message = MSMessage(session: MSSession())
         message.url = outgoing.encodedURL()
@@ -61,3 +62,4 @@ enum MessageFactory {
         return renderer.uiImage
     }
 }
+

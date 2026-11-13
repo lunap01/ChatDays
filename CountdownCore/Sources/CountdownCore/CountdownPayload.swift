@@ -1,5 +1,5 @@
 import Foundation
-
+ 
 /// `live` is the dynamic countdown (a live bubble that recomputes the days
 /// each time it is shown). `fixed` is the static one (a picture of the
 /// countdown on the day it was sent).
@@ -7,7 +7,7 @@ public enum CountdownMode: String, Sendable, CaseIterable, Codable {
     case live = "l"
     case fixed = "f"
 }
-
+ 
 public enum CountdownPayloadError: Error, Equatable {
     case notACountdownURL
     case missingField(String)
@@ -15,7 +15,7 @@ public enum CountdownPayloadError: Error, Equatable {
     /// Sent by a newer app version. Show the fallback bubble instead.
     case unsupportedVersion(Int)
 }
-
+ 
 /// How the countdown details are written into `MSMessage.url`.
 ///
 /// Testing showed that when someone WITHOUT the app taps a bubble, Messages
@@ -32,9 +32,9 @@ public enum CountdownLink {
         /// `https://host/path?v=1&t=...`
         case query
     }
-
+ 
     public static let base: URL? = nil
-
+ 
     /// Address of your landing page, for example
     /// `https://<you>.github.io/chatdays-support/`. Used only by "Share link":
     /// the details ride in the fragment, so the page's server never sees them.
@@ -42,7 +42,7 @@ public enum CountdownLink {
     public static let shareBase: URL? = URL(string: "https://lunap01.github.io/chatdays-support/")
     public static let style: Style = .fragment
 }
-
+ 
 /// Everything needed to rebuild a countdown from an `MSMessage.url`.
 ///
 /// The details travel as compact `key=value` items (see `CountdownLink`).
@@ -51,22 +51,25 @@ public enum CountdownLink {
 public struct CountdownPayload: Equatable, Sendable {
     public static let currentVersion = 1
     public static let maxTitleLength = 60
-
+ 
     public var id: UUID
     public var title: String
     public var eventDate: EventDate
     public var emoji: String?
     public var mode: CountdownMode
     public var style: CountdownStyle
+    /// Keep counting (days since) after the date, e.g. for anniversaries.
+    public var countsUp: Bool
     /// The sender's local date when the message was sent.
     public var sentOn: EventDate?
-
+ 
     public init(id: UUID = UUID(),
                 title: String,
                 eventDate: EventDate,
                 emoji: String? = nil,
                 mode: CountdownMode = .live,
                 style: CountdownStyle = CountdownStyle.Preset.modern.style,
+                countsUp: Bool = false,
                 sentOn: EventDate? = nil) {
         self.id = id
         self.title = String(title.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -76,11 +79,12 @@ public struct CountdownPayload: Equatable, Sendable {
         self.eventDate = eventDate
         self.mode = mode
         self.style = style
+        self.countsUp = countsUp
         self.sentOn = sentOn
     }
-
+ 
     // MARK: - Text shown by Messages itself
-
+ 
     /// What the conversation list and notifications show. Deliberately the
     /// event, never a day count: those surfaces are not live.
     public func summaryText(locale: Locale = .current) -> String {
@@ -88,13 +92,16 @@ public struct CountdownPayload: Equatable, Sendable {
         let name = emoji.map { "\($0) \(title)" } ?? title
         return "\(name) \u{00B7} \(date)"
     }
-
+ 
     public func accessibilityDescription(locale: Locale = .current) -> String {
-        "Countdown to \(title) on \(eventDate.displayString(locale: locale))"
+        if countsUp {
+            return "Days since \(title), from \(eventDate.displayString(locale: locale))"
+        }
+        return "Countdown to \(title) on \(eventDate.displayString(locale: locale))"
     }
-
+ 
     // MARK: - Sharing outside iMessage
-
+ 
     /// A web link that shows this countdown live in any browser, or nil when
     /// no site address is configured. Leaves out internal details such as the ID.
     public func shareURL(base: URL? = CountdownLink.shareBase) -> URL? {
@@ -108,16 +115,17 @@ public struct CountdownPayload: Equatable, Sendable {
         ]
         if let bg2 = style.background2 { items.append(.init(name: "bg2", value: bg2.hex)) }
         if let emoji { items.append(.init(name: "e", value: emoji)) }
-
+        if countsUp { items.append(.init(name: "u", value: "1")) }
+ 
         var details = URLComponents()
         details.queryItems = items
         comps.query = nil
         comps.percentEncodedFragment = details.percentEncodedQuery
         return comps.url
     }
-
+ 
     // MARK: - URL encoding
-
+ 
     public func encodedURL() -> URL {
         var items: [URLQueryItem] = [
             .init(name: "v", value: String(CountdownPayload.currentVersion)),
@@ -132,11 +140,12 @@ public struct CountdownPayload: Equatable, Sendable {
         if let pack = style.packID { items.append(.init(name: "pk", value: pack)) }
         if let emoji { items.append(.init(name: "e", value: emoji)) }
         if let sentOn { items.append(.init(name: "s", value: sentOn.isoString)) }
-
+        if countsUp { items.append(.init(name: "u", value: "1")) }
+ 
         var payload = URLComponents()
         payload.queryItems = items
         let encoded = payload.percentEncodedQuery ?? ""
-
+ 
         guard let base = CountdownLink.base,
               var comps = URLComponents(url: base, resolvingAgainstBaseURL: false) else {
             // Default: query items only, no scheme or host.
@@ -152,7 +161,7 @@ public struct CountdownPayload: Equatable, Sendable {
         }
         return comps.url!
     }
-
+ 
     public init(url: URL) throws {
         guard let comps = URLComponents(url: url, resolvingAgainstBaseURL: false) else {
             throw CountdownPayloadError.notACountdownURL
@@ -167,27 +176,27 @@ public struct CountdownPayload: Equatable, Sendable {
         }
         if queryItems.isEmpty { queryItems = comps.queryItems ?? [] }
         guard !queryItems.isEmpty else { throw CountdownPayloadError.notACountdownURL }
-
+ 
         var values: [String: String] = [:]
         for item in queryItems {
             if let v = item.value { values[item.name] = v }
         }
-
+ 
         func required(_ key: String) throws -> String {
             guard let v = values[key], !v.isEmpty else { throw CountdownPayloadError.missingField(key) }
             return v
         }
-
+ 
         let version = Int(try required("v")) ?? -1
         guard version >= 1 else { throw CountdownPayloadError.invalidField("v") }
         guard version <= CountdownPayload.currentVersion else {
             throw CountdownPayloadError.unsupportedVersion(version)
         }
-
+ 
         guard let id = UUID(uuidString: try required("i")) else { throw CountdownPayloadError.invalidField("i") }
         guard let date = EventDate(isoString: try required("d")) else { throw CountdownPayloadError.invalidField("d") }
         let title = try required("t")
-
+ 
         // Anything optional or unknown degrades gracefully.
         let mode = values["m"].flatMap(CountdownMode.init(rawValue:)) ?? .live
         var style = CountdownStyle.Preset.modern.style
@@ -199,9 +208,10 @@ public struct CountdownPayload: Equatable, Sendable {
                                    packID: values["pk"])
         }
         let sentOn = values["s"].flatMap(EventDate.init(isoString:))
-
+        let countsUp = values["u"] == "1"
+ 
         self.init(id: id, title: title, eventDate: date, emoji: values["e"],
-                  mode: mode, style: style, sentOn: sentOn)
+                  mode: mode, style: style, countsUp: countsUp, sentOn: sentOn)
     }
 }
-
+ 

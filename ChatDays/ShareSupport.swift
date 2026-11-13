@@ -27,7 +27,7 @@ struct ShareCardView: View {
     var body: some View {
         ZStack(alignment: .bottom) {
             CountdownCardView(
-                content: .countdown(CountdownCalculator.state(for: item.eventDate)),
+                content: .countdown(CountdownCalculator.state(for: item.eventDate, countsUp: item.countsUp)),
                 title: item.title,
                 emoji: item.emoji,
                 eventDate: item.eventDate,
@@ -65,7 +65,8 @@ enum ShareSupport {
     static func linkRequest(for item: SavedCountdown) -> ShareRequest? {
         guard let url = item.payload().shareURL() else { return nil }
         let name = [item.emoji, item.title].compactMap { $0 }.joined(separator: " ")
-        let sentence = CountdownCalculator.state(for: item.eventDate).sentence(about: name)
+        let sentence = CountdownCalculator.state(for: item.eventDate, countsUp: item.countsUp).sentence(about: name)
         return ShareRequest(items: ["\(sentence). Watch the countdown: \(url.absoluteString)"])
     }
 }
+

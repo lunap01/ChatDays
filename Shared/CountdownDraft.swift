@@ -11,19 +11,23 @@ struct CountdownDraft: Equatable {
     var date: Date
     var mode: CountdownMode
     var style: CountdownStyle
+    /// Keep counting (days since) after the date.
+    var countsUp: Bool
 
     init(savedID: UUID? = nil,
          title: String = "",
          emoji: String = "",
          date: Date,
          mode: CountdownMode = .live,
-         style: CountdownStyle = CountdownStyle.Preset.modern.style) {
+         style: CountdownStyle = CountdownStyle.Preset.modern.style,
+         countsUp: Bool = false) {
         self.savedID = savedID
         self.title = title
         self.emoji = emoji
         self.date = date
         self.mode = mode
         self.style = style
+        self.countsUp = countsUp
     }
 
     /// A blank draft dated tomorrow.
@@ -36,27 +40,30 @@ struct CountdownDraft: Equatable {
         let noon = Calendar.current.date(from: DateComponents(
             year: saved.eventDate.year, month: saved.eventDate.month, day: saved.eventDate.day, hour: 12)) ?? Date()
         self.init(savedID: saved.id, title: saved.title, emoji: saved.emoji ?? "",
-                  date: noon, mode: saved.mode, style: saved.style)
+                  date: noon, mode: saved.mode, style: saved.style, countsUp: saved.countsUp)
     }
 
     var cleanTitle: String { title.trimmingCharacters(in: .whitespacesAndNewlines) }
     var eventDate: EventDate { EventDate(date: date, timeZone: .current) }
 
-    /// Fills in emoji, look and (if nothing custom was typed) the title.
+    /// Fills in emoji, look, counting direction and (if nothing custom was typed) the title.
     mutating func apply(_ template: CountdownTemplate) {
         title = template.title(replacing: title)
         emoji = template.emoji
         style = template.style
+        countsUp = template.countsUp
     }
 
     /// What to send: a new ID every time.
     func payload() -> CountdownPayload {
         CountdownPayload(id: UUID(), title: cleanTitle, eventDate: eventDate,
-                         emoji: emoji.isEmpty ? nil : emoji, mode: mode, style: style)
+                         emoji: emoji.isEmpty ? nil : emoji, mode: mode, style: style, countsUp: countsUp)
     }
 
     func saved(createdAt: Date = Date()) -> SavedCountdown {
         SavedCountdown(id: savedID ?? UUID(), title: cleanTitle, eventDate: eventDate,
-                       emoji: emoji.isEmpty ? nil : emoji, mode: mode, style: style, createdAt: createdAt)
+                       emoji: emoji.isEmpty ? nil : emoji, mode: mode, style: style,
+                       countsUp: countsUp, createdAt: createdAt)
     }
 }
+

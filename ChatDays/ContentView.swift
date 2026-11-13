@@ -39,8 +39,9 @@ struct ContentView: View {
     }
 
     private var today: EventDate { EventDate(date: Date(), timeZone: .current) }
-    private var upcoming: [SavedCountdown] { library.items.filter { $0.eventDate >= today } }
-    private var past: [SavedCountdown] { library.items.filter { $0.eventDate < today } }
+    /// Coming up, plus anything still counting up after its date.
+    private var upcoming: [SavedCountdown] { library.items.filter { $0.eventDate >= today || $0.countsUp } }
+    private var past: [SavedCountdown] { library.items.filter { $0.eventDate < today && !$0.countsUp } }
 
     var body: some View {
         NavigationStack {

@@ -41,7 +41,7 @@ struct CountdownFormView: View {
     /// Exactly the card that will be sent.
     private var preview: some View {
         CountdownCardView(
-            content: .countdown(CountdownCalculator.state(for: draft.eventDate)),
+            content: .countdown(CountdownCalculator.state(for: draft.eventDate, countsUp: draft.countsUp)),
             title: draft.cleanTitle.isEmpty ? "Event name" : draft.cleanTitle,
             emoji: draft.emoji.isEmpty ? nil : String(draft.emoji.prefix(1)),
             eventDate: draft.eventDate,
@@ -84,11 +84,26 @@ struct CountdownFormView: View {
                 TextField("Emoji (optional)", text: $draft.emoji)
                     .padding(14)
                 Divider()
-                DatePicker("Date", selection: $draft.date, in: earliestDate..., displayedComponents: .date)
+                Group {
+                    if draft.countsUp {
+                        DatePicker("Date", selection: $draft.date, displayedComponents: .date)
+                    } else {
+                        DatePicker("Date", selection: $draft.date, in: earliestDate..., displayedComponents: .date)
+                    }
+                }
+                .padding(.horizontal, 14)
+                .padding(.vertical, 8)
+                Divider()
+                Toggle("Keep counting after the date", isOn: $draft.countsUp)
                     .padding(.horizontal, 14)
                     .padding(.vertical, 8)
             }
             .background(ChatDaysTheme.panel, in: RoundedRectangle(cornerRadius: 18, style: .continuous))
+            if draft.countsUp {
+                Text("Shows how many days it's been since the date. Great for anniversaries.")
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+            }
         }
     }
 

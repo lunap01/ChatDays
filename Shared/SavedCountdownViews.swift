@@ -4,7 +4,7 @@ import CountdownCore
 
 /// "34 DAYS", "TOMORROW", and so on, as of now.
 func countdownHeadline(for item: SavedCountdown) -> String {
-    CountdownCalculator.state(for: item.eventDate).headline
+    CountdownCalculator.state(for: item.eventDate, countsUp: item.countsUp).headline
 }
 
 private func cardGradient(_ style: CountdownStyle) -> LinearGradient {
@@ -89,12 +89,17 @@ struct HeroCountdownCard: View {
     var onShareImage: (() -> Void)? = nil
     var onShareLink: (() -> Void)? = nil
 
+    private var isCountingUp: Bool {
+        if case .elapsed = CountdownCalculator.state(for: item.eventDate, countsUp: item.countsUp) { return true }
+        return false
+    }
+
     var body: some View {
         let style = item.style
         let tint = Color(style.effectiveText)
         VStack(alignment: .leading, spacing: 0) {
             HStack {
-                Text("NEXT UP")
+                Text(isCountingUp ? "COUNTING UP" : "NEXT UP")
                     .font(.caption.weight(.bold))
                     .tracking(1.5)
                 Spacer()

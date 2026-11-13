@@ -51,6 +51,16 @@ struct CountdownCardView: View {
         }
     }
 
+    /// "Since 13 March 2019 · 2,801 days" once a count-up is running; otherwise just the date.
+    private func dateLine(for state: CountdownState) -> String {
+        if case .elapsed = state {
+            var line = "Since \(eventDate.displayString())"
+            if let detail = state.elapsedDaysText() { line += " \u{00B7} \(detail)" }
+            return line
+        }
+        return eventDate.displayString()
+    }
+
     var body: some View {
         let text = Color(style.effectiveText)
         ZStack {
@@ -67,8 +77,8 @@ struct CountdownCardView: View {
                     .lineLimit(2)
                     .multilineTextAlignment(.center)
                 switch content {
-                case .countdown:
-                    Text(eventDate.displayString())
+                case .countdown(let state):
+                    Text(dateLine(for: state))
                         .font(.system(size: 14))
                         .opacity(0.85)
                 case .fallback:
@@ -83,3 +93,4 @@ struct CountdownCardView: View {
         }
     }
 }
+

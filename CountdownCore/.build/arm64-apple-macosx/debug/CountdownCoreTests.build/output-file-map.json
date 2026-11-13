@@ -1,0 +1,61 @@
+{
+  "": {
+    "swift-dependencies": "/Users/paulscicluna/Documents/ChatDays/CountdownCore/.build/arm64-apple-macosx/debug/CountdownCoreTests.build/primary.swiftdeps"
+  },
+  "/Users/paulscicluna/Documents/ChatDays/CountdownCore/Tests/CountdownCoreTests/CountUpTests.swift": {
+    "dependencies": "/Users/paulscicluna/Documents/ChatDays/CountdownCore/.build/arm64-apple-macosx/debug/CountdownCoreTests.build/CountUpTests.d",
+    "object": "/Users/paulscicluna/Documents/ChatDays/CountdownCore/.build/arm64-apple-macosx/debug/CountdownCoreTests.build/CountUpTests.swift.o",
+    "swiftmodule": "/Users/paulscicluna/Documents/ChatDays/CountdownCore/.build/arm64-apple-macosx/debug/CountdownCoreTests.build/CountUpTests~partial.swiftmodule",
+    "swift-dependencies": "/Users/paulscicluna/Documents/ChatDays/CountdownCore/.build/arm64-apple-macosx/debug/CountdownCoreTests.build/CountUpTests.swiftdeps",
+    "diagnostics": "/Users/paulscicluna/Documents/ChatDays/CountdownCore/.build/arm64-apple-macosx/debug/CountdownCoreTests.build/CountUpTests.dia"
+  },
+  "/Users/paulscicluna/Documents/ChatDays/CountdownCore/Tests/CountdownCoreTests/CountdownCalculatorTests.swift": {
+    "dependencies": "/Users/paulscicluna/Documents/ChatDays/CountdownCore/.build/arm64-apple-macosx/debug/CountdownCoreTests.build/CountdownCalculatorTests.d",
+    "object": "/Users/paulscicluna/Documents/ChatDays/CountdownCore/.build/arm64-apple-macosx/debug/CountdownCoreTests.build/CountdownCalculatorTests.swift.o",
+    "swiftmodule": "/Users/paulscicluna/Documents/ChatDays/CountdownCore/.build/arm64-apple-macosx/debug/CountdownCoreTests.build/CountdownCalculatorTests~partial.swiftmodule",
+    "swift-dependencies": "/Users/paulscicluna/Documents/ChatDays/CountdownCore/.build/arm64-apple-macosx/debug/CountdownCoreTests.build/CountdownCalculatorTests.swiftdeps",
+    "diagnostics": "/Users/paulscicluna/Documents/ChatDays/CountdownCore/.build/arm64-apple-macosx/debug/CountdownCoreTests.build/CountdownCalculatorTests.dia"
+  },
+  "/Users/paulscicluna/Documents/ChatDays/CountdownCore/Tests/CountdownCoreTests/CountdownExtrasTests.swift": {
+    "dependencies": "/Users/paulscicluna/Documents/ChatDays/CountdownCore/.build/arm64-apple-macosx/debug/CountdownCoreTests.build/CountdownExtrasTests.d",
+    "object": "/Users/paulscicluna/Documents/ChatDays/CountdownCore/.build/arm64-apple-macosx/debug/CountdownCoreTests.build/CountdownExtrasTests.swift.o",
+    "swiftmodule": "/Users/paulscicluna/Documents/ChatDays/CountdownCore/.build/arm64-apple-macosx/debug/CountdownCoreTests.build/CountdownExtrasTests~partial.swiftmodule",
+    "swift-dependencies": "/Users/paulscicluna/Documents/ChatDays/CountdownCore/.build/arm64-apple-macosx/debug/CountdownCoreTests.build/CountdownExtrasTests.swiftdeps",
+    "diagnostics": "/Users/paulscicluna/Documents/ChatDays/CountdownCore/.build/arm64-apple-macosx/debug/CountdownCoreTests.build/CountdownExtrasTests.dia"
+  },
+  "/Users/paulscicluna/Documents/ChatDays/CountdownCore/Tests/CountdownCoreTests/CountdownPayloadTests.swift": {
+    "dependencies": "/Users/paulscicluna/Documents/ChatDays/CountdownCore/.build/arm64-apple-macosx/debug/CountdownCoreTests.build/CountdownPayloadTests.d",
+    "object": "/Users/paulscicluna/Documents/ChatDays/CountdownCore/.build/arm64-apple-macosx/debug/CountdownCoreTests.build/CountdownPayloadTests.swift.o",
+    "swiftmodule": "/Users/paulscicluna/Documents/ChatDays/CountdownCore/.build/arm64-apple-macosx/debug/CountdownCoreTests.build/CountdownPayloadTests~partial.swiftmodule",
+    "swift-dependencies": "/Users/paulscicluna/Documents/ChatDays/CountdownCore/.build/arm64-apple-macosx/debug/CountdownCoreTests.build/CountdownPayloadTests.swiftdeps",
+    "diagnostics": "/Users/paulscicluna/Documents/ChatDays/CountdownCore/.build/arm64-apple-macosx/debug/CountdownCoreTests.build/CountdownPayloadTests.dia"
+  },
+  "/Users/paulscicluna/Documents/ChatDays/CountdownCore/Tests/CountdownCoreTests/LibraryTests.swift": {
+    "dependencies": "/Users/paulscicluna/Documents/ChatDays/CountdownCore/.build/arm64-apple-macosx/debug/CountdownCoreTests.build/LibraryTests.d",
+    "object": "/Users/paulscicluna/Documents/ChatDays/CountdownCore/.build/arm64-apple-macosx/debug/CountdownCoreTests.build/LibraryTests.swift.o",
+    "swiftmodule": "/Users/paulscicluna/Documents/ChatDays/CountdownCore/.build/arm64-apple-macosx/debug/CountdownCoreTests.build/LibraryTests~partial.swiftmodule",
+    "swift-dependencies": "/Users/paulscicluna/Documents/ChatDays/CountdownCore/.build/arm64-apple-macosx/debug/CountdownCoreTests.build/LibraryTests.swiftdeps",
+    "diagnostics": "/Users/paulscicluna/Documents/ChatDays/CountdownCore/.build/arm64-apple-macosx/debug/CountdownCoreTests.build/LibraryTests.dia"
+  },
+  "/Users/paulscicluna/Documents/ChatDays/CountdownCore/Tests/CountdownCoreTests/ShareTests.swift": {
+    "dependencies": "/Users/paulscicluna/Documents/ChatDays/CountdownCore/.build/arm64-apple-macosx/debug/CountdownCoreTests.build/ShareTests.d",
+    "object": "/Users/paulscicluna/Documents/ChatDays/CountdownCore/.build/arm64-apple-macosx/debug/CountdownCoreTests.build/ShareTests.swift.o",
+    "swiftmodule": "/Users/paulscicluna/Documents/ChatDays/CountdownCore/.build/arm64-apple-macosx/debug/CountdownCoreTests.build/ShareTests~partial.swiftmodule",
+    "swift-dependencies": "/Users/paulscicluna/Documents/ChatDays/CountdownCore/.build/arm64-apple-macosx/debug/CountdownCoreTests.build/ShareTests.swiftdeps",
+    "diagnostics": "/Users/paulscicluna/Documents/ChatDays/CountdownCore/.build/arm64-apple-macosx/debug/CountdownCoreTests.build/ShareTests.dia"
+  },
+  "/Users/paulscicluna/Documents/ChatDays/CountdownCore/Tests/CountdownCoreTests/TemplateTests.swift": {
+    "dependencies": "/Users/paulscicluna/Documents/ChatDays/CountdownCore/.build/arm64-apple-macosx/debug/CountdownCoreTests.build/TemplateTests.d",
+    "object": "/Users/paulscicluna/Documents/ChatDays/CountdownCore/.build/arm64-apple-macosx/debug/CountdownCoreTests.build/TemplateTests.swift.o",
+    "swiftmodule": "/Users/paulscicluna/Documents/ChatDays/CountdownCore/.build/arm64-apple-macosx/debug/CountdownCoreTests.build/TemplateTests~partial.swiftmodule",
+    "swift-dependencies": "/Users/paulscicluna/Documents/ChatDays/CountdownCore/.build/arm64-apple-macosx/debug/CountdownCoreTests.build/TemplateTests.swiftdeps",
+    "diagnostics": "/Users/paulscicluna/Documents/ChatDays/CountdownCore/.build/arm64-apple-macosx/debug/CountdownCoreTests.build/TemplateTests.dia"
+  },
+  "/Users/paulscicluna/Documents/ChatDays/CountdownCore/Tests/CountdownCoreTests/UsageTests.swift": {
+    "dependencies": "/Users/paulscicluna/Documents/ChatDays/CountdownCore/.build/arm64-apple-macosx/debug/CountdownCoreTests.build/UsageTests.d",
+    "object": "/Users/paulscicluna/Documents/ChatDays/CountdownCore/.build/arm64-apple-macosx/debug/CountdownCoreTests.build/UsageTests.swift.o",
+    "swiftmodule": "/Users/paulscicluna/Documents/ChatDays/CountdownCore/.build/arm64-apple-macosx/debug/CountdownCoreTests.build/UsageTests~partial.swiftmodule",
+    "swift-dependencies": "/Users/paulscicluna/Documents/ChatDays/CountdownCore/.build/arm64-apple-macosx/debug/CountdownCoreTests.build/UsageTests.swiftdeps",
+    "diagnostics": "/Users/paulscicluna/Documents/ChatDays/CountdownCore/.build/arm64-apple-macosx/debug/CountdownCoreTests.build/UsageTests.dia"
+  }
+}

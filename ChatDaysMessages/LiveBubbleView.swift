@@ -17,7 +17,8 @@ struct LiveBubbleView: View {
     var body: some View {
         TimelineView(MidnightSchedule()) { context in
             CountdownCardView(
-                content: .countdown(CountdownCalculator.state(for: payload.eventDate, now: context.date)),
+                content: .countdown(CountdownCalculator.state(for: payload.eventDate, now: context.date,
+                                                              countsUp: payload.countsUp)),
                 title: payload.title,
                 emoji: payload.emoji,
                 eventDate: payload.eventDate,
@@ -47,3 +48,4 @@ struct PlaceholderBubble: View {
         .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
     }
 }
+
