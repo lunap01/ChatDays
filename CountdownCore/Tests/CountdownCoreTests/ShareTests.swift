@@ -14,18 +14,23 @@ final class ShareTests: XCTestCase {
         let payload = CountdownPayload(title: "Family Holiday", eventDate: date, emoji: "🏖️",
                                        style: CountdownStyle.Preset.holiday.style)
         let url = try XCTUnwrap(payload.shareURL(base: site))
-        XCTAssertEqual(url.scheme, "https")
-        XCTAssertEqual(url.host, "example.github.io")
-        XCTAssertEqual(url.path, "/chatdays-support/")
-        XCTAssertNil(url.query, "details must not be sent to the server")
+        // URLComponents keeps the trailing slash; URL.path strips it.
+        let comps = try XCTUnwrap(URLComponents(url: url, resolvingAgainstBaseURL: false))
+        XCTAssertEqual(comps.scheme, "https")
+        XCTAssertEqual(comps.host, "example.github.io")
+        XCTAssertEqual(comps.path, "/chatdays-support/")
+        XCTAssertNil(comps.query, "details must not be sent to the server")
 
-        let fragment = try XCTUnwrap(url.fragment)
-        XCTAssertTrue(fragment.contains("t=Family Holiday"))
-        XCTAssertTrue(fragment.contains("d=2026-12-15"))
-        XCTAssertTrue(fragment.contains("bg=C2410C"))
-        XCTAssertTrue(fragment.contains("bg2=BE123C"))
-        XCTAssertTrue(fragment.contains("fg=FFFFFF"))
-        XCTAssertTrue(fragment.contains("e="))
+        // The fragment is percent-encoded, so parse it rather than string-match.
+        let fragment = try XCTUnwrap(comps.percentEncodedFragment)
+        let items = try XCTUnwrap(URLComponents(string: "?" + fragment)?.queryItems)
+        let values = Dictionary(items.map { ($0.name, $0.value ?? "") }, uniquingKeysWith: { first, _ in first })
+        XCTAssertEqual(values["t"], "Family Holiday")
+        XCTAssertEqual(values["d"], "2026-12-15")
+        XCTAssertEqual(values["bg"], "C2410C")
+        XCTAssertEqual(values["bg2"], "BE123C")
+        XCTAssertEqual(values["fg"], "FFFFFF")
+        XCTAssertFalse((values["e"] ?? "").isEmpty)
     }
 
     func testShareLinkLeavesOutInternalDetails() throws {
@@ -59,3 +64,4 @@ final class ShareTests: XCTestCase {
         XCTAssertEqual(CountdownState.passed(daysAgo: 3).sentence(about: "Concert"), "Concert was 3 days ago")
     }
 }
+
